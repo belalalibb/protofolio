@@ -1,0 +1,72 @@
+/* ==========================================================================
+   BELAL ALI PROFESSIONAL PORTFOLIO — NATIVE ARABIC RTL STYLES
+   Direction: dir="rtl" / lang="ar"
+   ========================================================================== */
+
+[dir="rtl"] {
+  font-family: var(--font-arabic);
+}
+
+[dir="rtl"] .hero-headline,
+[dir="rtl"] .section-title,
+[dir="rtl"] .project-title,
+[dir="rtl"] .pillar-title,
+[dir="rtl"] .modal-title,
+[dir="rtl"] .contact-info-title {
+  font-family: var(--font-arabic);
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .hero-lead,
+[dir="rtl"] .section-subtitle,
+[dir="rtl"] .project-tagline,
+[dir="rtl"] .pillar-desc,
+[dir="rtl"] .timeline-card-desc,
+[dir="rtl"] .lab-desc,
+[dir="rtl"] .modal-body {
+  font-family: var(--font-arabic);
+  line-height: 1.75;
+}
+
+/* Timeline RTL Mirroring */
+[dir="rtl"] .timeline-wrapper::before {
+  left: auto;
+  right: 20px;
+}
+
+[dir="rtl"] .timeline-item {
+  padding-left: 0;
+  padding-right: 54px;
+}
+
+[dir="rtl"] .timeline-dot {
+  left: auto;
+  right: 12px;
+}
+
+/* Nav Link Underline in RTL */
+[dir="rtl"] .nav-link::after {
+  left: auto;
+  right: 0;
+}
+
+/* Highlights List Bullets */
+[dir="rtl"] .highlight-bullet {
+  transform: rotate(180deg);
+}
+
+/* Modal and Drawer Adjustments */
+[dir="rtl"] .modal-section-h3 {
+  font-family: var(--font-arabic);
+}
+
+/* Code boxes remain LTR for code readability */
+[dir="rtl"] code,
+[dir="rtl"] pre,
+[dir="rtl"] .modal-code-box,
+[dir="rtl"] .metric-value,
+[dir="rtl"] .tech-tag,
+[dir="rtl"] .skill-pill {
+  direction: ltr;
+  text-align: left;
+}
