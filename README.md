@@ -1,77 +1,83 @@
-# Belal Ali — Professional Engineering Portfolio
+# Belal Ali — Engineering Portfolio
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Status: Production Ready](https://img.shields.io/badge/Status-Production%20Ready-emerald.svg)]()
-[![Performance: 100](https://img.shields.io/badge/Lighthouse-100-success.svg)]()
+> **AI Systems & Automation Engineer** — real-time voice runtimes, multi-provider LLM orchestration, resilient concurrent automation, embedded & IoT.
+> *Resilient systems from the physical edge to real-time AI.*
 
-> **Senior AI Systems & Autonomous Automation Engineer**  
-> *Architecting Resilient Systems from Physical Edge to Real-Time AI.*
-
-An evidence-driven, high-performance portfolio platform showcasing 5 years (2021 – 2026) of verified engineering depth across real-time voice agents, multi-provider AI orchestration, resilient browser automation, and industrial IoT operating systems.
+A static, dependency-free, bilingual (English / Arabic) portfolio. Every figure shown on the site is either measured in one of the owner's **public** repositories and cited to its evidence file, or explicitly labelled **"reported"** when the source is private and could not be inspected. See `REVIEW_FINDINGS.md` for the audit that established this.
 
 ---
 
-## 🌟 Key Features
+## What's in the site
 
-- **Evidence-Driven Case Studies:** Full 18-point rubric for Flagship systems (`QEVION`, `AI_MDULE`, `SmartCore`, `BMEIA Auto-Booking`) with architecture diagrams, technical decisions, and code snippets.
-- **First-Class Bilingualism (EN / AR):** Native Arabic with tailored technical phrasing and clean RTL direction without layout shift.
-- **Ultra-Fast & Lightweight:** Built using modern web standards (Semantic HTML5, Vanilla CSS Design Tokens, Modular ES6 JS) with zero heavy framework bloat.
-- **Dark Futuristic Aesthetic:** Glassmorphism, subtle cyan/emerald ambient glows, responsive mobile navigation, and interactive modal dialogs.
-- **Interactive Engineering Lab:** Filterable showcase for exploratory hardware, trading algorithms, and developer tools.
+- **Hero** with an honest proof strip (runtime overhead per voice turn, barge-in stop latency, eval graders, test counts) and an original interruption-sequence diagram.
+- **Selected work:** four flagship systems (QEVION, general_ai_core + chat_engine, SmartCore, Concurrent Workflow Engine) with maturity badges (`prototype` / `demo` / `tested` / …) and evidence badges (`Public repo — verified` / `Reported — private source`), real screenshots, original diagrams and case-study modals with source excerpts and evidence links. Five supporting projects in a compact grid.
+- **Expertise, approach, timeline, lab** (filterable experiments) and a **contact** section whose form openly explains it is a `mailto:` handoff (no server).
+- **Bilingual** EN/AR with persisted preference, RTL layout, LTR islands for code/numbers/emails, and bilingual SVG diagrams swapped on language change.
+- **Accessibility:** skip link, focus-managed modal (`inert`, focus trap, Escape, focus restore), `aria-pressed` filters, `aria-expanded` mobile menu, ≥ 40 px touch targets, reduced-motion support.
 
 ---
 
-## 🚀 Quick Start (Run Locally)
+## Run locally
 
-### Using Python:
 ```bash
-cd d:\projects\portfolio
-python -m http.server 4173
+python3 -m http.server 4173 --bind 0.0.0.0
+# open http://localhost:4173
 ```
-Open your browser at: **`http://localhost:4173`**
 
-### Using Node.js:
+No build step. No framework. No tracking.
+
+---
+
+## Quality gates
+
 ```bash
-cd d:\projects\portfolio
-npx.cmd serve -l 4173
+node --check scripts/app.js scripts/data.js          # syntax
+pip install playwright && python3 -m playwright install chromium
+python3 tools/qa_playwright.py                       # 95 browser checks (EN/AR × desktop/mobile/tablet)
+python3 tools/gen_diagrams.py                        # regenerate assets/diagrams/*.svg
+```
+
+Latest run: see `QA_REPORT.md`.
+
+---
+
+## Repository structure
+
+```
+index.html                 semantic document, meta/OG/JSON-LD, section shells
+styles/main.css            design tokens, layout, media component, badges, modal
+styles/rtl.css             Arabic RTL overrides and LTR islands
+scripts/data.js            PORTFOLIO_DATA — all bilingual content, media entries, status vocabulary
+scripts/app.js             UI_STRINGS, DETAILED_CASE_STUDIES, App (i18n, render, modal, form)
+assets/screenshots/        8 real UI captures (WebP) from public repos
+assets/diagrams/           6 original diagrams × {en,ar} (SVG, generated)
+assets/icons/, assets/og/  favicon, touch icon, OG cover
+tools/gen_diagrams.py      SVG helper + runner
+tools/diagram_specs.py     diagram content (EN/AR)
+tools/qa_playwright.py     headless QA suite
+
+REVIEW_FINDINGS.md         independent audit: bugs, claims, media gaps, UX, decisions
+MEDIA_PLAN.md              provenance of every asset + what is still missing
+QA_REPORT.md               latest browser test results
+CASE_STUDIES.md            long-form case studies (aligned with the site)
+PROJECT_INVENTORY.md       maturity/evidence registry (with review disclaimer)
+PORTFOLIO_DISCOVERY.md, PERSONAL_BRAND_STRATEGY.md, PORTFOLIO_CONTENT.md,
+DESIGN_SYSTEM.md, ARCHITECTURE.md, RELEASE_CHECKLIST.md
 ```
 
 ---
 
-## 📁 Repository Structure
+## Adding or changing content
 
-```
-portfolio/
-├── index.html                   # Core semantic document with SEO & schema
-├── styles/
-│   ├── main.css                 # Design tokens, typography, glassmorphism, responsive grid
-│   └── rtl.css                  # Native Arabic RTL typography and directional mirroring
-├── scripts/
-│   ├── data.js                  # Complete bilingual data dictionary
-│   └── app.js                   # Application state, modal controller, filtering
-├── PORTFOLIO_DISCOVERY.md       # Audit of 271 workspace projects (2021-2026)
-├── PROJECT_INVENTORY.md         # Standardized maturity & evidence registry
-├── PERSONAL_BRAND_STRATEGY.md   # Positioning, differentiators, and audience personas
-├── PORTFOLIO_CONTENT.md         # Bilingual content specification
-├── CASE_STUDIES.md              # 18-point rubric deep-dives for flagship systems
-├── DESIGN_SYSTEM.md             # Design tokens and visual principles
-├── ARCHITECTURE.md              # System design and deployment architecture
-├── TEST_REPORT.md               # Automated verification test results
-└── RELEASE_CHECKLIST.md         # Pre-flight and deployment security checklist
-```
+1. Edit `scripts/data.js`. Use the fixed `status` vocabulary (`concept | prototype | demo | tested | field-tested | deployed | production`) and set `evidence` to `public` only when the claim can be checked in a public repo.
+2. For media, follow `MEDIA_PLAN.md` §6 (WebP/SVG, bilingual `alt` + `caption`, cite the source).
+3. For a new case study, add an entry to `DETAILED_CASE_STUDIES` in `scripts/app.js`; code snippets must be real excerpts (say so in `codeFile`) or clearly labelled as illustrative.
+4. Run the QA suite before committing.
 
 ---
 
-## 🛠️ Adding New Projects in the Future
+## Status and licence
 
-1. Open `scripts/data.js`.
-2. Add your new project entry to `PORTFOLIO_DATA.projects` (or `PORTFOLIO_DATA.labProjects`).
-3. If adding a deep case study, add the case study breakdown in `scripts/app.js` under `DETAILED_CASE_STUDIES`.
-4. Refresh your browser—the project card, metrics, and modal are automatically generated!
+No LICENSE file is included yet; choosing one is the owner's decision (see `MEDIA_PLAN.md` G-9). The site is not yet published to a public domain, so no canonical URL is set.
 
----
-
-## 📄 License & Attribution
-
-Designed and engineered by **Belal Ali (بلال علي)**.
-All project architectures and specifications are derived from verifiable local codebase artifacts.
+Designed and engineered by **Belal Ali (بلال علي)**; independent review pass October 2026.

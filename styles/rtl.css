@@ -1,18 +1,25 @@
 /* ==========================================================================
-   BELAL ALI PROFESSIONAL PORTFOLIO — NATIVE ARABIC RTL STYLES
-   Direction: dir="rtl" / lang="ar"
+   BELAL ALI PROFESSIONAL PORTFOLIO — ARABIC RTL OVERRIDES
+   Applied when <html dir="rtl" lang="ar">. Layout uses logical properties
+   where possible; these rules handle font switching and legacy physical offsets.
    ========================================================================== */
 
 [dir="rtl"] {
   font-family: var(--font-arabic);
 }
 
+[dir="rtl"] .hero-headline { line-height: 1.3; }
+
 [dir="rtl"] .hero-headline,
 [dir="rtl"] .section-title,
 [dir="rtl"] .project-title,
 [dir="rtl"] .pillar-title,
 [dir="rtl"] .modal-title,
-[dir="rtl"] .contact-info-title {
+[dir="rtl"] .contact-info-title,
+[dir="rtl"] .supporting-title,
+[dir="rtl"] .timeline-card-title,
+[dir="rtl"] .lab-title,
+[dir="rtl"] .approach-title {
   font-family: var(--font-arabic);
   letter-spacing: normal;
 }
@@ -23,50 +30,70 @@
 [dir="rtl"] .pillar-desc,
 [dir="rtl"] .timeline-card-desc,
 [dir="rtl"] .lab-desc,
-[dir="rtl"] .modal-body {
+[dir="rtl"] .modal-body,
+[dir="rtl"] .supporting-tagline,
+[dir="rtl"] .hero-metric-detail,
+[dir="rtl"] .form-hint,
+[dir="rtl"] .contact-cv-note {
   font-family: var(--font-arabic);
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-/* Timeline RTL Mirroring */
-[dir="rtl"] .timeline-wrapper::before {
-  left: auto;
-  right: 20px;
+/* Timeline mirroring (physical offsets in base CSS) */
+[dir="rtl"] .timeline-wrapper::before { left: auto; right: 20px; }
+[dir="rtl"] .timeline-item { padding-left: 0; padding-right: 54px; }
+[dir="rtl"] .timeline-dot { left: auto; right: 12px; }
+
+/* Nav underline */
+[dir="rtl"] .nav-link::after { left: auto; right: 0; }
+
+/* Mobile menu alignment */
+[dir="rtl"] .nav-menu { align-items: flex-end; }
+@media (max-width: 768px) {
+  [dir="rtl"] .nav-menu { align-items: flex-start; }
 }
 
-[dir="rtl"] .timeline-item {
-  padding-left: 0;
-  padding-right: 54px;
-}
+/* Skip link position */
+[dir="rtl"] .skip-link { left: auto; right: var(--space-md); }
 
-[dir="rtl"] .timeline-dot {
-  left: auto;
-  right: 12px;
-}
+/* CV note border side */
+[dir="rtl"] .contact-cv-note { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
 
-/* Nav Link Underline in RTL */
-[dir="rtl"] .nav-link::after {
-  left: auto;
-  right: 0;
-}
-
-/* Highlights List Bullets */
-[dir="rtl"] .highlight-bullet {
-  transform: rotate(180deg);
-}
-
-/* Modal and Drawer Adjustments */
-[dir="rtl"] .modal-section-h3 {
+/* Section tags / mono labels keep Latin-friendly tracking only for Latin */
+[dir="rtl"] .section-tag,
+[dir="rtl"] .hero-proof-title,
+[dir="rtl"] .project-highlights-title,
+[dir="rtl"] .subsection-title,
+[dir="rtl"] .contact-direct-title {
+  letter-spacing: 0;
   font-family: var(--font-arabic);
+  font-weight: 700;
 }
 
-/* Code boxes remain LTR for code readability */
+/* LTR islands: code, numbers, identifiers, emails */
 [dir="rtl"] code,
 [dir="rtl"] pre,
 [dir="rtl"] .modal-code-box,
-[dir="rtl"] .metric-value,
+[dir="rtl"] .hero-metric-value,
+[dir="rtl"] .hero-metric-source,
+[dir="rtl"] .project-metric-val,
+[dir="rtl"] .project-timeframe,
+[dir="rtl"] .modal-timeframe,
 [dir="rtl"] .tech-tag,
-[dir="rtl"] .skill-pill {
+[dir="rtl"] .skill-pill,
+[dir="rtl"] .lab-tech,
+[dir="rtl"] .modal-evidence-list,
+[dir="rtl"] .modal-code-file,
+[dir="rtl"] .approach-step-num {
   direction: ltr;
-  text-align: left;
+  unicode-bidi: isolate;
 }
+[dir="rtl"] .hero-metric-value,
+[dir="rtl"] .project-metric-val,
+[dir="rtl"] .project-timeframe,
+[dir="rtl"] .hero-metric-source,
+[dir="rtl"] .lab-tech {
+  text-align: right; /* keep visual alignment with surrounding RTL text */
+}
+[dir="rtl"] .modal-code-box,
+[dir="rtl"] .modal-evidence-list { text-align: left; }

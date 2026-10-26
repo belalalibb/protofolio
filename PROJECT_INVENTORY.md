@@ -3,6 +3,10 @@
 **Standardized Maturity Scale:** Concept · Prototype · In Development · Functional Demo · Tested · Production-Ready  
 **Evidence Level Scale:** Proven (Direct verifiable code & tests) · Plausible (Functional code without automated tests) · Unknown  
 
+> **⚠️ Independent review notice (2026-10-26).** This inventory was compiled by the previous agent from a local workspace (`D:\projects`) that the reviewer could **not** access. Only three projects could be checked against public repositories: **QEVION** (`markting_call_center`), **general_ai_core** and **chat_engen** — all three confirmed. For every other entry the "Evidence: Proven" labels, maturity levels (e.g. "Field Deployed", "Production-Ready") and the §5 scorecard are the previous agent's **self-assessment, not independently verified**. The live site therefore uses the stricter vocabulary from `scripts/data.js` (`status` + `evidence: public|reported`), and `REVIEW_FINDINGS.md` §3 lists each claim that was qualified or removed. Operational details of BMEIA/EzSolver (visa-portal automation, Turnstile solving) are intentionally **not** presented on the site; see `REVIEW_FINDINGS.md` §5.
+>
+> Mapping to site status: QEVION → `tested / public`; AI_MDULE → supporting, `prototype / reported` (succeeded by general_ai_core + chat_engine → `tested / public`, added as flagship); SmartCore → `prototype / reported`; BMEIA → reframed as "Concurrent Workflow Engine", `demo / reported`; Genspark extension → `demo / reported` (personal tool, not "official").
+
 ---
 
 ## 1. Tier A — Flagship Projects (Primary Case Studies)
@@ -139,6 +143,8 @@ To maintain high professional standards, security, and privacy, the following pr
 ---
 
 ## 5. Summary Evaluation Scorecard
+
+> Self-assigned by the previous agent without a published rubric or external review. Retained for history; **not shown on the site**.
 
 | Project | Architecture & Depth (30) | Execution & Reliability (25) | Problem Clarity (20) | Evidence Strength (15) | Brand Impact (10) | **Total (100)** | Tier |
 |---------|---------------------------|------------------------------|----------------------|------------------------|-------------------|------------------|------|

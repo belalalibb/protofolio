@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="t d" lang="en">
+<title id="t">AI orchestration platform — general_ai_core + chat_engine</title><desc id="d">Layered modular monolith: framework-free core with Protocol ports, composition layer (FastAPI, admin agent), infrastructure bindings behind ADRs, provider adapters including a remote gateway; chat_engine reuses the core as a SHA-pinned dependency and exposes an OpenAI-compatible API, SSE streaming and a bilingual UI.</desc>
+<defs><marker id="m22d3ee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="m22d3ees" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#22d3ee"/></marker><marker id="m34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker><marker id="m34d399s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#34d399"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mfbbf24s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fbbf24"/></marker><marker id="ma78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="ma78bfas" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#a78bfa"/></marker><marker id="mfb7185" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fb7185"/></marker><marker id="mfb7185s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fb7185"/></marker><marker id="m9fb0c7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9fb0c7"/></marker><marker id="m9fb0c7s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#9fb0c7"/></marker><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c1222"/><stop offset="1" stop-color="#090d18"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text x="600" y="40" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9" text-anchor="middle">AI orchestration platform — general_ai_core + chat_engine</text>
+<rect x="60" y="80" width="340" height="60" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="60" y="80" width="340" height="4" rx="2" fill="#22d3ee"/>
+<text x="230.0" y="108" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9" text-anchor="middle">chat_engine UI (Vite + Lit + TS · ar/en · RTL)</text>
+<line x1="230" y1="142" x2="230" y2="170" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)"/>
+<rect x="60" y="172" width="340" height="120" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="60" y="172" width="340" height="4" rx="2" fill="#22d3ee"/>
+<text x="230.0" y="200" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">chat_engine API</text>
+<text x="230.0" y="222" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">POST /v1/chat/completions (OpenAI-compatible)</text>
+<text x="230.0" y="240" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">POST /v1/chat/stream (SSE) · conversations</text>
+<text x="230.0" y="258" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">catalog · admin · skills · agent profiles</text>
+<text x="230" y="318" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#fbbf24" text-anchor="middle">depends on general_ai_core pinned by commit SHA · additive-only</text>
+<line x1="402" y1="232" x2="478" y2="232" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#mfbbf24)" stroke-dasharray="5 4"/>
+<rect x="480" y="80" width="660" height="90" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="480" y="80" width="660" height="4" rx="2" fill="#a78bfa"/>
+<text x="810.0" y="108" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9" text-anchor="middle">apps/ — composition layer</text>
+<text x="810.0" y="130" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">FastAPI create_app (every collaborator injected)</text>
+<text x="810.0" y="148" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">admin_agent · observability (OTel / structlog)</text>
+<line x1="810" y1="172" x2="810" y2="200" stroke="#a78bfa" stroke-width="1.8" marker-end="url(#ma78bfa)"/>
+<rect x="480" y="202" width="660" height="120" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="480" y="202" width="660" height="4" rx="2" fill="#34d399"/>
+<text x="810.0" y="230" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9" text-anchor="middle">core/ — framework-free domain (22 packages)</text>
+<text x="810.0" y="252" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">routing · execution · tools · skills · memory</text>
+<text x="810.0" y="270" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">identity · audit · learning · sourcechange</text>
+<text x="810.0" y="288" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">every I/O concern is a Protocol port</text>
+<text x="810" y="345" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#34d399" text-anchor="middle">12 import-linter contracts: core imports no web framework, DB driver or telemetry stack</text>
+<line x1="650" y1="324" x2="650" y2="362" stroke="#34d399" stroke-width="1.8" marker-end="url(#m34d399)"/>
+<line x1="970" y1="324" x2="970" y2="362" stroke="#34d399" stroke-width="1.8" marker-end="url(#m34d399)"/>
+<rect x="480" y="364" width="320" height="110" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="480" y="364" width="320" height="4" rx="2" fill="#9fb0c7"/>
+<text x="640.0" y="392" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">infrastructure/ — bindings behind ADRs</text>
+<text x="640.0" y="414" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">PostgreSQL / Alembic</text>
+<text x="640.0" y="432" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">Redis</text>
+<text x="640.0" y="450" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">S3 · Vault · Argon2id</text>
+<rect x="820" y="364" width="320" height="110" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="820" y="364" width="320" height="4" rx="2" fill="#fbbf24"/>
+<text x="980.0" y="392" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">providers/ — adapters behind ProviderAdapterPort</text>
+<text x="980.0" y="414" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">remote gateway (ADR-0008)</text>
+<text x="980.0" y="432" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">groq · genspark_llm</text>
+<text x="980.0" y="450" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">local_echo (hermetic)</text>
+<line x1="980" y1="476" x2="980" y2="510" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#mfbbf24)"/>
+<rect x="820" y="512" width="320" height="44" rx="10" fill="#1a1607" stroke="#fbbf24" stroke-width="1"/>
+<text x="980.0" y="539.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#fbbf24" text-anchor="middle">Remote Provider Gateway (14 providers wired, CE-20)</text>
+<rect x="60" y="600" width="1080" height="44" rx="10" fill="#0f1b17" stroke="#34d399" stroke-width="1"/>
+<text x="600.0" y="627.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#34d399" text-anchor="middle">Evidence: ~3,750 pytest tests · mypy --strict · 12/0 import contracts · 12 ADRs · 65 Playwright UI captures</text>
+<text x="600" y="690" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11.5" font-weight="500" fill="#9fb0c7" text-anchor="middle">github.com/belalalibb/general_ai_core · github.com/belalalibb/chat_engen</text>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="t d" lang="en">
+<title id="t">QEVION barge-in protocol — what happens when the caller interrupts</title><desc id="d">Timeline of a user interruption: speech onset, barge-in detection, cancel to provider and stop_playout to client, confirmation, and reconciliation that truncates the unheard tail so it never persists as context.</desc>
+<defs><marker id="m22d3ee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="m22d3ees" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#22d3ee"/></marker><marker id="m34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker><marker id="m34d399s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#34d399"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mfbbf24s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fbbf24"/></marker><marker id="ma78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="ma78bfas" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#a78bfa"/></marker><marker id="mfb7185" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fb7185"/></marker><marker id="mfb7185s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fb7185"/></marker><marker id="m9fb0c7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9fb0c7"/></marker><marker id="m9fb0c7s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#9fb0c7"/></marker><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c1222"/><stop offset="1" stop-color="#090d18"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text x="600" y="40" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#f1f5f9" text-anchor="middle">QEVION barge-in protocol — what happens when the caller interrupts</text>
+<rect x="20" y="70" width="260" height="44" rx="10" fill="#0e1524" stroke="#22d3ee" stroke-width="1.2"/>
+<text x="150" y="98" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Caller / browser</text>
+<line x1="150" y1="114" x2="150" y2="590" stroke="#22d3ee" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 5"/>
+<rect x="320" y="70" width="260" height="44" rx="10" fill="#0e1524" stroke="#fbbf24" stroke-width="1.2"/>
+<text x="450" y="98" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Turn plane (VAD)</text>
+<line x1="450" y1="114" x2="450" y2="590" stroke="#fbbf24" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 5"/>
+<rect x="620" y="70" width="260" height="44" rx="10" fill="#0e1524" stroke="#34d399" stroke-width="1.2"/>
+<text x="750" y="98" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Core · Session.interrupt()</text>
+<line x1="750" y1="114" x2="750" y2="590" stroke="#34d399" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 5"/>
+<rect x="920" y="70" width="260" height="44" rx="10" fill="#0e1524" stroke="#a78bfa" stroke-width="1.2"/>
+<text x="1050" y="98" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Provider (s2s)</text>
+<line x1="1050" y1="114" x2="1050" y2="590" stroke="#a78bfa" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="4 5"/>
+<circle cx="150" cy="150" r="7" fill="#0b1020" stroke="#22d3ee" stroke-width="2.5"/>
+<rect x="123.0" y="115" width="54" height="22" rx="11" fill="#22d3ee" fill-opacity="0.12" stroke="#22d3ee" stroke-opacity="0.5"/>
+<text x="150" y="130" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#22d3ee" text-anchor="middle">t0</text>
+<rect x="180" y="162" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="370" y="181" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">user speech onset</text>
+<circle cx="450" cy="212" r="7" fill="#0b1020" stroke="#fbbf24" stroke-width="2.5"/>
+<rect x="423.0" y="177" width="54" height="22" rx="11" fill="#fbbf24" fill-opacity="0.12" stroke="#fbbf24" stroke-opacity="0.5"/>
+<text x="450" y="192" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#fbbf24" text-anchor="middle">t1</text>
+<rect x="480" y="224" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="670" y="243" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">barge-in detected → INTERRUPTION_DETECTED</text>
+<circle cx="750" cy="274" r="7" fill="#0b1020" stroke="#34d399" stroke-width="2.5"/>
+<rect x="340" y="286" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="530" y="305" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">dialog: SPEAKING → LISTENING</text>
+<circle cx="750" cy="336" r="7" fill="#0b1020" stroke="#34d399" stroke-width="2.5"/>
+<rect x="723.0" y="301" width="54" height="22" rx="11" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.5"/>
+<text x="750" y="316" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#34d399" text-anchor="middle">t2</text>
+<line x1="760" y1="336" x2="1040" y2="336" stroke="#a78bfa" stroke-width="1.8" marker-end="url(#ma78bfa)"/>
+<rect x="790" y="348" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="980" y="367" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">cancel_response(rid) → provider</text>
+<circle cx="750" cy="398" r="7" fill="#0b1020" stroke="#34d399" stroke-width="2.5"/>
+<rect x="723.0" y="363" width="54" height="22" rx="11" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.5"/>
+<text x="750" y="378" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#34d399" text-anchor="middle">t2</text>
+<line x1="740" y1="398" x2="160" y2="398" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)"/>
+<rect x="190" y="410" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="380" y="429" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">STOP_PLAYOUT → client</text>
+<circle cx="150" cy="460" r="7" fill="#0b1020" stroke="#22d3ee" stroke-width="2.5"/>
+<rect x="123.0" y="425" width="54" height="22" rx="11" fill="#22d3ee" fill-opacity="0.12" stroke="#22d3ee" stroke-opacity="0.5"/>
+<text x="150" y="440" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#22d3ee" text-anchor="middle">t3</text>
+<rect x="180" y="472" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="370" y="491" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">client confirms playout stopped (or forced after timeout)</text>
+<circle cx="750" cy="522" r="7" fill="#0b1020" stroke="#34d399" stroke-width="2.5"/>
+<rect x="723.0" y="487" width="54" height="22" rx="11" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.5"/>
+<text x="750" y="502" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="600" fill="#34d399" text-anchor="middle">t4</text>
+<rect x="340" y="534" width="380" height="28" rx="8" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<text x="530" y="553" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#f1f5f9" text-anchor="middle">RECONCILE: keep heard text only · truncate_response(played_ms)</text>
+<rect x="60" y="606" width="1080" height="44" rx="10" fill="#0f1b17" stroke="#34d399" stroke-width="1"/>
+<text x="600.0" y="633.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#34d399" text-anchor="middle">Measured (server clock, mock provider, synthetic ar-EG clips): t1→t3 p50 4 ms · p95 6 ms · 0 forced stops (evidence/P2/CP-0015).</text>
+<text x="600" y="684" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">Spec target: detected → playout stopped ≤ 300 ms p95 (QV-ACC-018). Live barge-in against the real provider is still backlog (QEVION_WORK_STATE.md).</text>
+</svg>

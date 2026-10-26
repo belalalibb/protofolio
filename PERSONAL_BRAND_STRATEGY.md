@@ -3,6 +3,8 @@
 **Date:** October 2026  
 **Document Code:** PBS-2026-v1.0  
 
+> **Review notice (2026-10-26).** Planning document by the previous agent. Positioning phrases such as "Anti-Bot / Reverse Engineering", "hundreds of clients booked", "<800ms" and "5 years proven" were **not adopted** on the live site: the audit found them unverifiable or inadvisable to publish (`REVIEW_FINDINGS.md` §3, §5). The site now positions the owner as *AI Systems & Automation Engineer* with the honest proof strip (runtime overhead, barge-in latency, eval graders, test counts) and "building since 2021".
+
 ---
 
 ## 1. Core Professional Positioning

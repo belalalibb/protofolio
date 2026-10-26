@@ -3,6 +3,8 @@
 **Primary Language:** English (Global Technical Market)  
 **Secondary Language:** Arabic (Native RTL with tailored engineering terminology)  
 
+> **Review notice (2026-10-26).** Content specification by the previous agent. The **authoritative copy is now `scripts/data.js` and `UI_STRINGS` in `scripts/app.js`**, which diverge from this file wherever a claim could not be verified (see `REVIEW_FINDINGS.md` §3) or touched CAPTCHA/Turnstile/embassy-portal automation (§5). The Arabic typo "لن ابنِ" and U+FFFD characters present here were fixed in the live strings.
+
 ---
 
 ## 1. Global Navigation & Header

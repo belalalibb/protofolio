@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="t d" lang="en">
+<title id="t">Where the time goes — measured voice turn without a tool call (sandbox, OpenAI Realtime)</title><desc id="d">Breakdown of a no-tool voice turn: 503 ms configured end-of-turn silence, 1.9 ms QEVION commit, 61 ms network to provider, 441 ms provider first audio, 1.1 ms QEVION forward, 0.6 ms WebSocket, 75 ms browser playout. QEVION-owned time is about 3 ms per turn.</desc>
+<defs><marker id="m22d3ee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="m22d3ees" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#22d3ee"/></marker><marker id="m34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker><marker id="m34d399s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#34d399"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mfbbf24s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fbbf24"/></marker><marker id="ma78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="ma78bfas" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#a78bfa"/></marker><marker id="mfb7185" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fb7185"/></marker><marker id="mfb7185s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fb7185"/></marker><marker id="m9fb0c7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9fb0c7"/></marker><marker id="m9fb0c7s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#9fb0c7"/></marker><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c1222"/><stop offset="1" stop-color="#090d18"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text x="600" y="40" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#f1f5f9" text-anchor="middle">Where the time goes — measured voice turn without a tool call (sandbox, OpenAI Realtime)</text>
+<rect x="80.0" y="90" width="482.8" height="46" fill="#fbbf24" fill-opacity="0.85"/>
+<rect x="562.8" y="90" width="3.0" height="46" fill="#34d399" fill-opacity="0.85"/>
+<rect x="565.8" y="90" width="58.5" height="46" fill="#9fb0c7" fill-opacity="0.85"/>
+<rect x="624.3" y="90" width="423.3" height="46" fill="#a78bfa" fill-opacity="0.85"/>
+<rect x="1047.6" y="90" width="3.0" height="46" fill="#34d399" fill-opacity="0.85"/>
+<rect x="1050.6" y="90" width="3.0" height="46" fill="#9fb0c7" fill-opacity="0.85"/>
+<rect x="1053.6" y="90" width="72.0" height="46" fill="#22d3ee" fill-opacity="0.85"/>
+<rect x="80" y="90" width="1040" height="46" rx="6" fill="none" stroke="#263147" stroke-width="1.2"/>
+<text x="600" y="162" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9" text-anchor="middle">≈ 1.09 s p50 perceived (last speech → first audible agent audio) · p95 ≈ 1.38 s · n = 20 turns</text>
+<rect x="90" y="187" width="16" height="16" rx="4" fill="#fbbf24"/>
+<text x="120" y="200" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">End-of-turn silence window (configured 500 ms)</text>
+<text x="880" y="200" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">503 ms</text>
+<rect x="961.0" y="185" width="98" height="22" rx="11" fill="#fbbf24" fill-opacity="0.12" stroke="#fbbf24" stroke-opacity="0.5"/>
+<text x="1010" y="200" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#fbbf24" text-anchor="middle">turn plane</text>
+<rect x="90" y="227" width="16" height="16" rx="4" fill="#34d399"/>
+<text x="120" y="240" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">QEVION: commit to provider</text>
+<text x="880" y="240" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">1.9 ms</text>
+<rect x="976.5" y="225" width="67" height="22" rx="11" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.5"/>
+<text x="1010" y="240" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#34d399" text-anchor="middle">QEVION</text>
+<rect x="90" y="267" width="16" height="16" rx="4" fill="#9fb0c7"/>
+<text x="120" y="280" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">Network → provider ack</text>
+<text x="880" y="280" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">61 ms</text>
+<rect x="972.5" y="265" width="75" height="22" rx="11" fill="#9fb0c7" fill-opacity="0.12" stroke="#9fb0c7" stroke-opacity="0.5"/>
+<text x="1010" y="280" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#9fb0c7" text-anchor="middle">network</text>
+<rect x="90" y="307" width="16" height="16" rx="4" fill="#a78bfa"/>
+<text x="120" y="320" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">Provider: first audio</text>
+<text x="880" y="320" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">441 ms</text>
+<rect x="969.0" y="305" width="82" height="22" rx="11" fill="#a78bfa" fill-opacity="0.12" stroke="#a78bfa" stroke-opacity="0.5"/>
+<text x="1010" y="320" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#a78bfa" text-anchor="middle">provider</text>
+<rect x="90" y="347" width="16" height="16" rx="4" fill="#34d399"/>
+<text x="120" y="360" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">QEVION: forward audio to client</text>
+<text x="880" y="360" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">1.1 ms</text>
+<rect x="976.5" y="345" width="67" height="22" rx="11" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-opacity="0.5"/>
+<text x="1010" y="360" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#34d399" text-anchor="middle">QEVION</text>
+<rect x="90" y="387" width="16" height="16" rx="4" fill="#9fb0c7"/>
+<text x="120" y="400" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">WebSocket to browser</text>
+<text x="880" y="400" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">0.6 ms</text>
+<rect x="965.0" y="385" width="90" height="22" rx="11" fill="#9fb0c7" fill-opacity="0.12" stroke="#9fb0c7" stroke-opacity="0.5"/>
+<text x="1010" y="400" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#9fb0c7" text-anchor="middle">transport</text>
+<rect x="90" y="427" width="16" height="16" rx="4" fill="#22d3ee"/>
+<text x="120" y="440" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#f1f5f9" text-anchor="start">Browser render + device output</text>
+<text x="880" y="440" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="end">75 ms</text>
+<rect x="972.5" y="425" width="75" height="22" rx="11" fill="#22d3ee" fill-opacity="0.12" stroke="#22d3ee" stroke-opacity="0.5"/>
+<text x="1010" y="440" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#22d3ee" text-anchor="middle">browser</text>
+<rect x="60" y="500" width="1080" height="44" rx="10" fill="#0f1b17" stroke="#34d399" stroke-width="1"/>
+<text x="600.0" y="527.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#34d399" text-anchor="middle">QEVION-owned time ≈ 3 ms per turn (spec target p50 &lt; 60 ms). Tool-calling turns: p50 2.6 s — extra time is provider generation cycles, reproduced without QEVION.</text>
+<text x="600" y="590" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">Source: docs/audit/LATENCY_ROOT_CAUSE_2026-09-24.md (public repo). Single-host clock, Chromium, synthetic clips. Real user devices and networks are unmeasured.</text>
+<text x="600" y="690" font-family="'JetBrains Mono', Consolas, 'Courier New', monospace" font-size="11" font-weight="400" fill="#9fb0c7" text-anchor="middle">p50 values · ms · 2026-09-24</text>
+</svg>

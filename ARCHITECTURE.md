@@ -57,6 +57,8 @@ d:\projects\portfolio/
 
 ## 3. Localization & Bidirectionality Engine
 
+> **Updated 2026-10-26.** Translation now uses three attribute channels: `data-i18n` (plain text via `textContent`), `data-i18n-html` (trusted HTML from the internal `UI_STRINGS` dictionary only — used for the hero heading so nested `<span class="gradient-text">` survives round-trips), and `data-i18n-attr="placeholder:key,aria-label:key"`. All data-driven rendering passes through `esc()`. Bilingual SVG diagrams are declared once and the component swaps `.en.svg`/`.ar.svg` on toggle. Initial language = saved preference → `navigator.language` → `en`.
+
 - **Persistence:** User selection is persisted across browser reloads via `localStorage.getItem('belal_portfolio_lang')`.
 - **Directional Adaptation:**
   ```javascript
@@ -64,23 +66,28 @@ d:\projects\portfolio/
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   ```
 - **Typography Switching:**
-  - English: `Outfit`, `Inter`, `JetBrains Mono`
-  - Arabic: `Tajawal`, `Cairo`
+  - English: `Outfit`, `JetBrains Mono` (loaded via `<link rel="preconnect">` + one stylesheet, `display=swap`)
+  - Arabic: `Tajawal` (Cairo fallback in the font stack only)
 - **Code Block Preservation:** All code snippets, metric numbers, and terminal outputs maintain LTR orientation regardless of page direction for optimal technical readability.
 
 ---
 
-## 4. Performance & Core Web Vitals Optimization
+## 4. Performance
 
-- **First Contentful Paint (FCP):** < 0.4s (instant inline CSS & minimal blocking resources).
-- **Cumulative Layout Shift (CLS):** 0.00 (all cards and images utilize explicit dimensional constraints).
-- **Zero Framework Bloat:** Total runtime payload is under 60KB uncompressed, loading in milliseconds over any mobile network.
+> The FCP/CLS figures previously listed here were never measured and have been removed. No Lighthouse run exists yet (no public URL). What *is* in place:
+
+- No framework, no bundler; two CSS files, two JS files loaded with `defer`.
+- Fonts via `preconnect` + a single stylesheet with `display=swap` (no CSS `@import`).
+- Every `<img>` has `width`/`height` and sits in an `aspect-ratio` frame to avoid layout shift; all below-the-fold media is `loading="lazy" decoding="async"`.
+- `background-attachment: fixed` disabled below 768 px.
+- Screenshots are WebP (quality 82); diagrams are SVG (≈ 10–13 KB each).
+- Verification: `tools/qa_playwright.py` asserts no horizontal overflow, no failed requests and no broken images at 390/820/1366 px.
 
 ---
 
 ## 5. Deployment Architectures
 
-The platform is 100% static-ready and can be deployed with zero build pipeline to any modern edge host:
+The platform is fully static and can be deployed with zero build pipeline to any modern edge host:
 
 1. **Vercel / Netlify:**
    - Root directory: `./`
