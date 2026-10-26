@@ -1,419 +1,191 @@
-# COMPREHENSIVE ENGINEERING CASE STUDIES
-**Author & Lead Engineer:** Belal Ali (بلال علي)  
-**Standard:** 18-Point Evidence-Driven Engineering Rubric  
-**Updated:** October 2026  
+# ENGINEERING CASE STUDIES
+
+**Version:** 2 (2026-10-26, independent review pass) · Previous version archived at `docs/archive/CASE_STUDIES_v1_unverified.md`.
+**Rule:** every statement is tagged by evidence level — **[verified]** = checked in a public repository by the reviewer, with the file named; **[reported]** = owner's/previous agent's description, source not accessible to the reviewer. Where a figure was found to be wrong or unsupported, the correct figure (or the absence of one) is stated.
+
+Each study answers the ten questions a reader needs: problem · who it's for · constraints · what was built · architecture · key decisions · what was measured · what wasn't · maturity · what's next.
 
 ---
 
-# Case Study 1: QEVION — Real-Time Voice Agent & Activity Platform
-*Low-latency voice runtime with provider-neutral orchestration and deterministic business guardrails for Egyptian Arabic.*
+## Case Study 1 — QEVION: Real-Time Voice Agent Runtime
 
-### 1. Executive Summary
-QEVION is an enterprise-grade agent activity platform engineered to deliver natural, sub-second real-time voice interactions targeted at the Egyptian Arabic (`ar-EG`) dialect. It introduces a decoupled architecture where a Copilot designs declarative Activity Blueprints while a high-performance, domain-agnostic Core executes voice sessions over WebSockets with Silero Voice Activity Detection (VAD) and 7-step interruption recovery.
+**Repo:** `github.com/belalalibb/markting_call_center` (public) · **Status on site:** `tested` / `public` · **Timeframe:** 2025–2026
 
-### 2. Core Problem & Context
-Commercial voice solutions (e.g. standard LLM wrappers) face severe limitations in production:
-- **High latency (1.5s–3s):** Causes awkward pauses and collisions during natural human conversation.
-- **Vendor Lock-in:** Hardcoding a single voice provider creates total dependency.
-- **Hallucinations on Business Rules:** Allowing an LLM to state prices, eligibility, or state transitions leads to commercial liability.
-- **Arabic Dialect Deficiencies:** Standard models struggle with Egyptian Arabic phonetics and conversational turn-taking.
+### 1. Problem
+Generic conversational-AI wrappers add seconds of latency, lock the product to a single vendor, and allow the model to improvise business facts (prices, eligibility, confirmations). In Egyptian Arabic, natural turn-taking and barge-in are additionally fragile. **[verified: spec §1–§3]**
 
-### 3. Solution Objective
-Build a vendor-neutral, deterministic voice runtime where:
-- Voice latency is under 800ms.
-- LLM output is strictly separated from business state transitions.
-- The platform operates identically across inbound/outbound without rewriting domain code.
+### 2. Who it is for
+Businesses that want a voice agent for inbound/outbound calls where the *conversation* may be generative but the *decisions* must be deterministic and auditable. **[verified: spec, activity blueprint examples]**
 
-### 4. Role & Actual Contribution
-- Sole Architect & Lead Developer.
-- Formulated the 160KB authoritative specification (`QEVION_PLATFORM_SPEC_v3.md`).
-- Designed the import-linter contracts, WebSocket streaming pipeline, AudioWorklet PCM16 audio processor, and state machine.
+### 3. Constraints
+- Provider-neutral: OpenAI Realtime today, others via role ports (`s2s`, `llm`, `asr`, `tts`, `turn`, `decision`). **[verified]**
+- Core must contain no domain vocabulary; domain behaviour is data (`qevion.activity.v1` blueprints). Enforced by 5 `import-linter` contracts. **[verified: `.importlinter`]**
+- Latency criteria pre-registered in spec §41: E2E p50 ≤ 1200 ms (stretch ≤ 800), barge-in stop ≤ 60 ms. **[verified]**
 
-### 5. Requirements & Constraints
-- Sub-second interruption handling (barge-in).
-- Zero domain vocabulary in `qevion/core` (strictly contract-driven).
-- Zero credential exposure in git, logs, or client-side assets (`CredentialResolver`).
-- Egyptian Arabic phonetic accuracy.
+### 4. What was built
+- 160,984-byte normative spec `QEVION_PLATFORM_SPEC_v3.md` (1,544 lines) with QV-* rule IDs and ADR-0001…0004. **[verified]**
+- FastAPI/WebSocket gateway, `Session` core with turn plane, `FieldStore` facts store, provider adapters (OpenAI Realtime + mock), browser client with AudioWorklet PCM16 capture, Silero VAD turn-taking. **[verified: `qevion/` tree]**
+- Operator Console (desktop + mobile) — see screenshots. **[verified: `evidence/P4/CP-0017`]**
+- ~222 tests across 26 files. **[verified]**
 
-### 6. System Design & Architecture
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 Client (Browser / Device)                   │
-│       AudioWorklet (PCM 16-bit 24kHz) ◄──► WebSockets        │
-└──────────────────────────────▲──────────────────────────────┘
-                               │
-┌──────────────────────────────▼──────────────────────────────┐
-│                    QEVION Voice Runtime                     │
-│  FastAPI / Uvicorn ── WebSocket Keepalive (Ping 25s / 60s)   │
-├──────────────────────────────┬──────────────────────────────┤
-│    Real-Time Voice Pipeline  │   Deterministic Logic Core   │
-│  - Silero VAD (Turn Detect)  │  - ADR-0004 Rule Engine      │
-│  - 7-Step Barge-in Cancel    │  - Activity State Machine    │
-│  - OpenAI Realtime WS Client │  - Price & Confirmation Gate │
-├──────────────────────────────┴──────────────────────────────┤
-│               Provider Role Ports & Contracts               │
-│     [s2s] · [llm] · [asr] · [tts] · [turn] · [decision]     │
-└─────────────────────────────────────────────────────────────┘
-```
+### 5. Architecture
+See `assets/diagrams/qevion-architecture.{en,ar}.svg` (original, drawn from the spec). Browser → WS → gateway → Session (turn plane · interruption · facts) → role ports → providers; blueprints are loaded as data.
 
-### 7. Key Technical Decisions & Rationale
-- **ADR-0001 (Monorepo):** Facilitates synchronized versioning between contracts and runtime.
-- **ADR-0004 (Deterministic Truth):** LLM proposes text; QEVION deterministic logic validates constraints before any business state changes or financial commitments are confirmed.
-- **AudioWorklet vs ScriptProcessor:** AudioWorklet runs on a dedicated Web Audio thread, preventing audio dropouts caused by main-thread UI rendering.
+### 6. Key decisions
+- **ADR-0004 — LLM output is never business truth.** Prices/claims/transitions are produced by deterministic code from `FieldStore`; the model only proposes phrasing. **[verified]**
+- **Interruption as a first-class protocol.** `Session.interrupt()` runs DETECT → CANCEL → RECONCILE with watermarks t0..t4; cancel sends `provider.cancel_response` + `STOP_PLAYOUT` with a 300 ms forced path; reconcile keeps only the text the user plausibly heard and truncates the provider's context to match. **[verified: `qevion/core/session.py` L616–668]**
+- **Evidence culture.** Pre-registered criteria, "NOT PROVEN → REVERTED" notes, UNVERIFIED tags in the owner's own audits. **[verified: `docs/audit/`]**
 
-### 8. Data & Process Flow
-1. User speaks into browser mic.
-2. `AudioWorklet` buffers PCM16 audio chunks at 24kHz and streams them over a binary WebSocket connection.
-3. Server-side Silero VAD evaluates speech activity frames.
-4. When user speaks mid-response, a 7-step interruption event fires: cancels current audio buffer, halts downstream provider generation, resets playback pointers, and records turn timestamp.
-5. Transcription and intent are validated by the deterministic state machine.
-6. Synthesized audio is streamed back with minimal jitter.
+### 7. What was measured
+| Metric | Value | Conditions | Source |
+|---|---|---|---|
+| QEVION-owned overhead per turn | ≈ 3–4 ms | sandbox, n = 20 | `docs/audit/LATENCY_ROOT_CAUSE_2026-09-24.md` **[verified]** |
+| E2E p50 / p95, no-tool turns | 1011 / 1308 ms | sandbox, Chromium, synthetic ar-EG clips, n = 20 | same **[verified]** |
+| E2E p50, tool turns | 2614 ms | same | same **[verified]** |
+| Barge-in t1→t3 (detect → playout stopped) p50 / p95 | 4 / 6 ms | **mock provider** | `evidence/P4/CP-0015` **[verified]** |
+| Live TTFA (text → first audio) | 453 / 968 / 965 ms | OpenAI Realtime, 3 samples | `evidence/live/` **[verified]** |
+| Eval CP-0009 | 22/22 scenarios, 232/232 graders incl. `facts_not_invented` | mock | `evidence/P2/CP-0009` **[verified]** |
+| WebSocket soak | **86 s** (target 75 s), 7 heartbeats, close 1000 | live OpenAI, browser | `evidence/live/browser_voice_smoke_openai.json` **[verified]** |
+| WS keep-alive tests | 8 s and 22 s | pytest | `tests/test_ws_keepalive.py` **[verified]** |
 
-### 9. Development Challenges & Obstacles
-- WebSocket keepalive disconnects during silent pauses in long conversations.
-- Word collisions in Egyptian Arabic where colloquial filler words ("يعني", "تمام") caused premature interruptions.
+### 8. What was *not* measured / corrected claims
+- **"< 800 ms speech-to-speech" — not supported.** 800 ms is the spec's *stretch* target; measured E2E p50 is ≈ 1.0 s and ≈ 95 % of it is the provider. Removed from the site.
+- **"0 % hallucination rate" — not a measured rate.** What exists is a design rule (ADR-0004) plus a passing eval (232/232). Reworded accordingly.
+- **"45-minute zero-drop soak" — does not exist in the repo.** The longest soak is 86 s. Removed.
+- The code snippet previously shown (`abort_agent_speech_stream`, `record_interruption_metric`) **does not exist**; replaced with a trimmed excerpt of the real `interrupt()`.
+- Barge-in numbers are from a **mock** provider; live-provider barge-in has not been characterised.
 
-### 10. Mitigation & Engineering Fixes
-- Implemented tuned WS ping intervals (ping 25s, timeout 60s) directly into Uvicorn server configuration.
-- Calibrated Silero VAD energy threshold and minimum speech duration (250ms) to ignore casual breathing and brief filler sounds.
+### 9. Maturity
+`tested` — automated tests and evidence artefacts exist; no production traffic is documented. Authorship in the repo is predominantly AI-agent accounts with the owner as director/approver, i.e. AI-assisted engineering directed by the owner.
 
-### 11. Testing & Verification Evidence
-- Verification script: `scripts/recovery/verify.sh` enforcing import-linter rules and secret scanning.
-- Soak test: `scripts/ws_keepalive_soak.py` proving continuous 45-minute zero-drop WebSocket stability.
-- Headless browser voice smoke tests via Chromium with simulated microphone inputs (`scripts/browser_voice_smoke.py`).
-
-### 12. What Was Actually Built & Accomplished
-- Complete generic core package (`qevion`).
-- Modular provider adapters for OpenAI Realtime API and Typesafe voice ports.
-- Comprehensive specification document (`QEVION_PLATFORM_SPEC_v3.md`) covering 56 normative sections.
-
-### 13. Practical & Technical Outcomes
-- Sub-800ms speech-to-speech turnaround.
-- Zero business logic hallucinations in benchmark simulation scenarios.
-- 100% decoupling between domain configuration (Blueprints) and execution engine.
-
-### 14. Remaining Work & Known Limitations
-- Primary POC implemented for OpenAI Realtime API; additional hardware edge TTS/ASR ports planned for local on-premise execution.
-- Telephony SIP/WebRTC trunking interface scheduled for future expansion.
-
-### 15. Associated Technologies & Tools
-Python 3.13, FastAPI, Uvicorn, WebSockets, OpenAI Realtime API, Silero VAD, AudioWorklet, Pytest, Ruff, Import-Linter.
-
-### 16. Visual Artifacts & Diagrams
-Interactive state flow diagrams and WebSocket protocol sequence charts integrated in the web portfolio.
-
-### 17. Code Snippets & Technical Highlights
-```python
-# From QEVION Core Contract Gate:
-# Core imports contracts only; no domain vocabulary in core.
-from qevion.contracts.session import VoiceSessionState
-from qevion.contracts.vad import VADEvent, VADEventType
-
-async def handle_turn_event(event: VADEvent, session: VoiceSessionState) -> None:
-    if event.type == VADEventType.USER_SPEECH_STARTED:
-        if session.is_agent_speaking:
-            # 7-step interruption sequence
-            await session.abort_agent_speech_stream(cancel_downstream=True)
-            session.record_interruption_metric()
-```
-
-### 18. Lessons Learned
-- Real-time voice is an infrastructure and protocol challenge, not just a prompt engineering challenge.
-- Separating non-deterministic generative models from deterministic business logic is mandatory for any enterprise deployment.
+### 10. Next
+Live-provider barge-in characterisation; longer soak (≥ 10 min) with a documented harness; second provider adapter to prove neutrality in practice.
 
 ---
 
-# Case Study 2: AI_MDULE — Multi-Provider AI Orchestration & RAG Platform
-*Enterprise AI gateway featuring Qdrant vector retrieval, multilingual embeddings, and headless browser bridge providers.*
+## Case Study 2 — general_ai_core + chat_engine: Multi-Provider AI Platform
 
-### 1. Executive Summary
-AI_MDULE is a modular AI orchestration engine built around FastAPI. It unifies commercial API providers (OpenAI, Gemini, Anthropic, Together, Groq) with a custom-engineered headless browser automation provider (DeepSeek/Gemini) that overcomes API paywalls and rate limits via real-time DOM mutation streaming and Cloudflare Turnstile bypass.
+**Repos:** `github.com/belalalibb/general_ai_core`, `github.com/belalalibb/chat_engen` (public) · **Status:** `tested` / `public` · **Timeframe:** 2025–2026
 
-### 2. Core Problem & Context
-Organizations frequently face exorbitant API billing, sudden provider outages, and rigid rate limits. Furthermore, free web-based LLM interfaces (like DeepSeek) do not provide public API keys for developers, forcing teams into costly subscriptions or fragmented scripts.
+### 1. Problem
+Use many LLM providers behind one API without rewriting clients, keep the architecture modular as capabilities grow, and ship a UI that is Arabic-first rather than translated as an afterthought. **[verified: README / MASTER_VISION doc]**
 
-### 3. Solution Objective
-Create a unified REST API gateway with:
-- Intelligent two-stage domain query classification.
-- Multilingual RAG with Qdrant vector database.
-- Automated fallback across providers.
-- A proprietary browser bridge provider that automates web chat interfaces as if they were native REST endpoints.
+### 2. Who it is for
+Developers and small teams needing an OpenAI-compatible endpoint with provider fallback, plus an operator/admin surface.
 
-### 4. Role & Actual Contribution
-- Sole Architect and Developer.
-- Built the two-stage classifier, Qdrant embedding ingestion pipelines, and the complete reverse-engineered SeleniumBase headless browser driver with Cloudflare evasion.
+### 3. Constraints
+Contract-first core; architectural boundaries enforced by tooling; evidence screenshots per release.
 
-### 5. Requirements & Constraints
-- Avoid blocking the FastAPI asynchronous event loop when executing synchronous browser automation.
-- Extract clean text without UI noise, streaming status indicators, or "Searching..." badges.
-- Handle dynamic Cloudflare Turnstile verification automatically.
+### 4. What was built
+- `general_ai_core`: 22 core packages, 12 ADRs, **12 import-linter contracts**, ≈ **3,758** tests in 284 files, 65 Playwright evidence screenshots (Workbench, Command Center, Admin). **[verified]**
+- `chat_engine`: OpenAI-compatible `/v1` API with SSE streaming over a **14-provider** gateway (gateway, groq, genspark_llm, …); Lit web UI with RTL Arabic, dark/light themes; admin providers panel; evidence sets ce13b / ce20 / ce24 with a state ledger. **[verified]**
 
-### 6. System Design & Architecture
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    FastAPI REST Gateway                     │
-│               POST /ai/query  │  POST /ai/ingest            │
-└──────────────────────────────▲──────────────────────────────┘
-                               │
-┌──────────────────────────────▼──────────────────────────────┐
-│                    Orchestration Engine                     │
-│  2-Stage Classifier ──► RAG Pipeline ──► Provider Manager   │
-├──────────────────────────────┬──────────────────────────────┤
-│      Embedding & Search      │       Provider Manager       │
-│  - Qdrant Vector DB          │  - Standard APIs (OpenAI,    │
-│  - paraphrase-multilingual   │    Gemini, Groq, Anthropic)  │
-│    mpnet-base-v2             │  - Browser Bridge Provider   │
-│  - Celery Ingestion Workers  │    (SeleniumBase uc=True)    │
-└──────────────────────────────┴──────────────────────────────┘
-```
+### 5. Architecture
+`assets/diagrams/ai-orchestration-platform.{en,ar}.svg`: clients → gateway (SSE) → core (contracts · routing · capabilities) → provider adapters → observability.
 
-### 7. Key Technical Decisions & Rationale
-- **Qdrant Vector DB:** Chosen for high-speed nearest-neighbor search, lightweight Docker footprint, and native payload filtering.
-- **Thread Delegation (`asyncio.to_thread`):** Wrapped synchronous SeleniumBase browser operations to prevent freezing FastAPI's asynchronous event loop.
-- **Button Counting Heuristics (`db183363`):** Replaced fragile text stability checks with deterministic button count detection to know exactly when response generation finishes.
+### 6. Key decisions
+Contract-first packages with linter-enforced boundaries; OpenAI-compatible surface so existing SDKs work unchanged; Arabic as the default UI language.
 
-### 8. Data & Process Flow
-1. Client POSTs query to `/ai/query`.
-2. Domain classifier tags intent with confidence score; if above threshold (0.6), queries Qdrant for top-K matching chunks.
-3. Prompt is constructed with retrieved context.
-4. ProviderManager routes request to preferred provider; if unavailable, cascades to fallback list.
-5. If Browser Provider is activated: headless Chrome (`uc=True`) opens session, injects human keystrokes, monitors DOM via `aria-busy` and button counting, and streams output.
+### 7. What was measured
+Test counts and contract counts above; UI states captured by Playwright per release (r185, r199, completion_v2). No latency or throughput benchmarks are published. **[verified]**
 
-### 9. Development Challenges & Obstacles
-- Cloudflare Human Verification blocking standard Selenium sessions (`navigator.webdriver = true`).
-- Stale element reference exceptions during live DOM streaming as React/Next.js re-rendered message containers.
-- Consecutive text deduplication issues causing fragmented Arabic words ("نورتنإيه").
+### 8. Not measured
+Provider failover timing, cost per request, concurrency limits.
 
-### 10. Mitigation & Engineering Fixes
-- Migrated to SeleniumBase Undetected Chromedriver (`uc=True`).
-- Engineered a `startswith` re-render guard instead of numerical character indexing, preserving unbroken streaming.
-- Added delimiter checks (`\n`) on chunk boundary transitions.
+### 9. Maturity
+`tested`. Public, documented, actively evolving.
 
-### 11. Testing & Verification Evidence
-- Over 50 documented milestones in `README.md` and `GEMINI.md`.
-- Successful continuous operation across 3 consecutive Cloudflare challenges without IP blocks.
-- End-to-end integration verified via curl and unit test suites.
-
-### 12. What Was Actually Built & Accomplished
-- Production-ready FastAPI application with Docker Compose setup.
-- Working browser automation provider for DeepSeek and Gemini.
-- Comprehensive RAG ingestion pipeline supporting PDF, OCR, CSV, and URL scraping.
-
-### 13. Practical & Technical Outcomes
-- 100% cost reduction on query answering by leveraging headless browser automation where API tokens were cost-prohibitive.
-- Zero downtime query routing across 5 distinct AI backends.
-
-### 14. Remaining Work & Known Limitations
-- Headless browser requests take 15–25 seconds compared to 1–2s for native API endpoints due to browser lifecycle overhead (persistent session pooling designed for next iteration).
-
-### 15. Associated Technologies & Tools
-Python, FastAPI, Qdrant, Docker, Redis, Celery, SeleniumBase, BeautifulSoup4, Sentence-Transformers, Pytest.
-
-### 16. Code Highlights
-```python
-# From DeepSeek Browser Provider in AI_MDULE:
-# Button counting heuristic + Re-render guard for live streaming
-def wait_for_reply_complete(driver, timeout=60):
-    start = time.time()
-    while time.time() - start < timeout:
-        # Check action buttons container unique to DeepSeek response completion
-        buttons = driver.find_elements(By.CSS_SELECTOR, "div.db183363")
-        if len(buttons) >= 5:
-            # All 5 action buttons rendered: Copy, Retry, Like, Dislike, Share
-            return True
-        time.sleep(0.5)
-    return False
-```
-
-### 17. Lessons Learned
-- Web UI reverse-engineering requires deep inspection of accessibility attributes (`aria-busy`, `aria-live`) rather than relying on brittle CSS classes that change between frontend builds.
+### 10. Next
+Publish a benchmark table (TTFT per provider), a hosted demo, and an architecture doc index linking ADRs to packages.
 
 ---
 
-# Case Study 3: SmartCore Platform — Industrial IoT & Building OS
-*An offline-first, C++17 intelligent building and agriculture platform using Modbus RTU and ESP-IDF.*
+## Case Study 3 — SmartCore: Offline-First Building & Greenhouse Controller
 
-### 1. Executive Summary
-SmartCore is an industrial-grade building and greenhouse automation platform designed to operate independently of cloud connectivity. Built using C++17 and the ESP-IDF framework on ESP32 microcontrollers, it adopts Modbus RTU over RS-485 as its primary fieldbus, with state mirroring to Firebase Realtime Database for remote telemetry and web-based control.
+**Source:** private (`smart_tech/SmartCore`, `smart_farm` per inventory) · **Status:** `prototype` / `reported` · **Timeframe:** 2021–2026
 
-### 2. Core Problem & Context
-Agricultural and industrial installations (greenhouses, farms, factories) suffer from frequent power fluctuations and internet dropouts. Standard "smart home" IoT products rely entirely on continuous cloud connections, causing irrigation failures, climate control lockouts, and sensor data loss when offline.
+### 1. Problem
+Greenhouses and small buildings with unstable power/connectivity cannot depend on cloud round-trips for irrigation, ventilation or lighting. **[reported]**
 
-### 3. Solution Objective
-Engineer a rugged, offline-first operating system capable of:
-- Executing local control loops (soil moisture irrigation, solar tracking, load balancing) with zero internet access.
-- Interfacing with industry-standard sensors and actuators via Modbus RTU / RS-485.
-- Providing seamless cloud synchronization when connectivity is available.
+### 2. Who it is for
+Small agricultural operators and building owners in low-connectivity environments. **[reported]**
 
-### 4. Role & Actual Contribution
-- Embedded Systems & Firmware Architect.
-- Defined Modbus RTU register mapping (`smartcore_modbus_regs.h`).
-- Implemented C++17 firmware on ESP-IDF v5.3, dual-axis solar tracking algorithms, and Firebase RTDB web telemetry.
+### 3. Constraints
+Local control loop must keep running offline; industrial fieldbus compatibility (Modbus RTU / RS-485); low-cost hardware (ESP32). **[reported]**
 
-### 5. Requirements & Constraints
-- Must run 24/7 without memory leaks on resource-constrained ESP32 chips.
-- Deterministic cycle times for critical control loops (< 50ms).
-- Complete galvanic isolation and noise immunity using RS-485 differential signaling.
+### 4. What was built
+ESP32 firmware in C++17 on ESP-IDF with FreeRTOS tasks; Modbus RTU register map for PLC interoperability; HAL mirroring telemetry to Firebase RTDB for a web dashboard. Grew out of Arduino experiments (dual-axis LDR solar tracker, soil-moisture irrigation, IR pest-trap counter) shown in the Lab. **[reported]**
 
-### 6. System Design & Architecture
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 SmartCore Building OS                       │
-│    ESP-IDF v5.3 / C++17 Firmware on ESP32 Dual-Core         │
-├──────────────────────────────┬──────────────────────────────┤
-│      Industrial Fieldbus     │      Local Control Loop      │
-│  - Modbus RTU (RS-485)       │  - Soil Moisture PID         │
-│  - Register Map (Hold/Input) │  - Dual-Axis Solar Tracker   │
-│  - Hardware Abstraction (HAL)│  - Insect & Load Cell Sensor │
-├──────────────────────────────┴──────────────────────────────┤
-│               Cloud Synchronization Layer                   │
-│   WiFi / Cellular Bridge ──► Firebase RTDB ──► Web UI       │
-└─────────────────────────────────────────────────────────────┘
-```
+### 5. Architecture
+`assets/diagrams/smartcore-edge-controller.{en,ar}.svg`, explicitly labelled *reported architecture*.
 
-### 7. Key Technical Decisions & Rationale
-- **Modbus RTU over RS-485:** Standardized industrial protocol ensuring 1,200m transmission range, extreme electrical noise immunity, and compatibility with commercial PLC hardware.
-- **ESP-IDF v5.3 with C++17:** Provides native FreeRTOS task scheduling, memory safety through RAII, and fine-grained peripheral control over the Arduino abstraction.
-- **State Mirroring:** Firebase RTDB acts solely as a passive state mirror; firmware never waits for cloud acknowledgment to execute local switching.
+### 6. Key decisions
+Cloud as mirror, not dependency; standard fieldbus over proprietary links; register map as the integration contract. **[reported]**
 
-### 8. Data & Process Flow
-1. Analog & digital sensors (soil moisture probes, 4x LDR optical array, load cell amplifier) sample environment.
-2. Local control tasks process telemetry against hardcoded safe operating envelopes.
-3. If solar differential exceeds threshold, stepper motors rotate solar panels to maximize irradiance.
-4. Modbus RTU slave registers are updated in SRAM.
-5. Background networking task packages state deltas and synchronizes with Firebase when connection is healthy.
+### 7. What was measured
+**Nothing the reviewer could verify.** The previous version claimed "100 % uptime during simulated outages", "< 50 ms cycle times" and "Field Deployed"; no firmware, logs, photos or register map were accessible. These figures are **not** on the site.
 
-### 9. Development Challenges & Obstacles
-- Signal ringing and ground loops on long RS-485 wire runs in agricultural soil environments.
-- Memory fragmentation caused by frequent string formatting during HTTP/WebSocket sync on ESP32.
+### 8. Not measured / open
+Uptime, cycle time, power consumption, deployment count.
 
-### 10. Mitigation & Engineering Fixes
-- Added 120-ohm termination resistors and optocoupled transceiver isolation.
-- Eliminated dynamic memory allocation in runtime loop; replaced with fixed-size ring buffers and statically allocated Modbus register tables.
+### 9. Maturity
+`prototype` — prototype firmware and lab hardware, by the owner's account.
 
-### 11. Testing & Verification Evidence
-- Lab Kit v1.0 milestone validation.
-- Long-duration field testing of solar tracker with dual stepper motor accuracy.
-- Functional web dashboard reflecting real-time Firebase RTDB state changes.
-
-### 12. What Was Actually Built & Accomplished
-- C++17 firmware library and Modbus header definitions.
-- Operational hardware installations for smart farm telemetry and automated irrigation.
-- Working web interfaces with live control switches and telemetry graphs.
-
-### 13. Practical & Technical Outcomes
-- 100% uptime of local irrigation and tracking loops during simulated internet outages.
-- Power generation efficiency increased via automated dual-axis solar tracking.
-
-### 14. Remaining Work & Known Limitations
-- Cellular GSM (SIM800L/A7670) fallback bridge currently in prototype stage; WiFi is currently the primary upstream gateway.
-
-### 15. Associated Technologies & Tools
-C++17, ESP-IDF v5.3, FreeRTOS, Modbus RTU / RS-485, Arduino, ESP8266/ESP32, Firebase Realtime Database, HTML5/CSS/JS.
+### 10. Next
+Commit a redacted firmware excerpt and the register-map header; add photos of the hardware (see `MEDIA_PLAN.md` G-1/G-2). Either step would move the status from *reported* to *demonstrated*.
 
 ---
 
-# Case Study 4: BMEIA Auto-Booking Engine & High-Concurrency Resiliency System
-*Thread-safe multi-worker appointment booking engine for embassy visa portals with turnstile solvers and zero external dependencies.*
+## Case Study 4 — Concurrent Workflow Engine: Resilient Browser Automation
 
-### 1. Executive Summary
-BMEIA Auto-Booking System is a multi-threaded Python automation engine engineered to secure high-demand visa appointment slots at the Austrian Embassy (Cairo). It coordinates parallel worker threads using a thread-safe client pool with mutex locks, integrates a custom-built Cloudflare Turnstile solver (`EzSolver`), and guarantees atomic reservation without double-booking or rate-limiting bans.
+**Source:** private · **Status:** `demo` / `reported` · **Timeframe:** 2024–2026
 
-### 2. Core Problem & Context
-Embassy appointment slots open without advance notice and vanish within seconds. Thousands of applicants compete concurrently. The embassy booking portal employs strict IP rate limits, session expiration timers, dynamic form structures, and Cloudflare verification challenges that immediately block traditional scripts.
+> **Scope note.** The previous version presented this as an embassy visa-appointment booking tool with a Cloudflare Turnstile solver. Automating a government portal, defeating anti-bot controls and processing third-party passport data raise legal, privacy and professional-credibility concerns and do not belong in a public portfolio. This case study therefore presents **only the reusable engineering pattern**. No target system, solving time, booking outcome or client count is stated.
 
-### 3. Solution Objective
-Build a fault-tolerant automation system capable of:
-- Continuously polling slot availability with randomized exponential jitter.
-- Executing atomic multi-client bookings across parallel threads without collisions.
-- Automatically solving captcha challenges in under 4 seconds without paying for 3rd-party solving APIs.
-- Providing instant Telegram alert notifications upon confirmed appointment allocation.
+### 1. Problem
+Long-running browser/form workflows that process many records in parallel fail predictably: two workers pick the same record, upstream rate limits cause cascading errors, and failures at 3 a.m. leave no trace to debug from. **[reported]**
 
-### 4. Role & Actual Contribution
-- Sole Architect and Developer.
-- Built the thread-safe `ClientPool`, the retry & backoff engine, the session preservation pipeline, and the native turnstile solving mechanism (`EzSolver`).
+### 2. Who it is for
+Operators running batch form workflows against slow or rate-limited upstreams.
 
-### 5. Requirements & Constraints
-- Zero race conditions: Multiple threads must never attempt to book the same passport number simultaneously.
-- Sub-5-second end-to-end booking execution from the instant a slot is detected.
-- Resilient recovery: A failed network request must seamlessly return the client to the unbooked pool without crashing the process.
+### 3. Constraints
+Exactly-once processing per record; respect upstream rate limits; operator must not be tied to a terminal.
 
-### 6. System Design & Architecture
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   CLI Orchestrator (main.py)                │
-│    ThreadPoolExecutor (Max Threads = min(N, client_count))  │
-├──────────────────────────────┬──────────────────────────────┤
-│    Thread-Safe ClientPool    │      Worker Thread Flow      │
-│  - threading.Lock() Mutex    │  - Pick unbooked client      │
-│  - Atomic mark_booked()      │  - Slot Polling with Jitter  │
-│  - Unbooked queue management │  - Form field auto-fill      │
-├──────────────────────────────┴──────────────────────────────┤
-│               Resilience & Solving Subsystems               │
-│  - EzSolver (Native Cloudflare Turnstile Chrome Engine)     │
-│  - Telegram Bot Webhook Notification Dispatcher             │
-│  - Dual-Sink Logger (Console INFO + File DEBUG Trace)       │
-└─────────────────────────────────────────────────────────────┘
-```
+### 4. What was built
+Thread-safe `ClientPool` leasing each record to exactly one worker under a lock; bounded `ThreadPoolExecutor`; idempotent retries with exponential backoff + Gaussian jitter; dual-sink logging (console milestones + microsecond traces on disk); Telegram notifications. **[reported]**
 
-### 7. Key Technical Decisions & Rationale
-- **Thread Mutex Locks (`threading.Lock`):** Guaranteed that candidate passport numbers cannot be claimed by parallel workers concurrently.
-- **EzSolver vs Paid Captcha APIs:** Third-party solver APIs add 15–30 seconds of network latency—fatal for appointment booking. EzSolver executes locally using native Chrome automation in under 3.5 seconds with zero API costs.
-- **Dual-Sink Logging:** Ensures the operator has a clean console view of booking milestones while maintaining microsecond-level HTTP transaction logs on disk for post-mortem debugging.
+### 5. Architecture
+`assets/diagrams/concurrent-workflow-pattern.{en,ar}.svg`.
 
-### 8. Data & Process Flow
-1. Script loads client records and application configuration.
-2. `ThreadPoolExecutor` launches worker threads with staggered startup jitter.
-3. Worker retrieves random client from pool under lock.
-4. Checks embassy appointment calendar; if dates appear, locks slot.
-5. Injects client personal details into embassy form.
-6. Solves verification challenge via EzSolver.
-7. Submits reservation and checks confirmation token.
-8. Marks client as booked, notifies Telegram channel, and halts worker pool if all clients are satisfied.
+### 6. Key decisions
+Lease-not-queue to make double-processing structurally impossible; jittered backoff to avoid thundering herds; two log sinks with different audiences.
 
-### 9. Development Challenges & Obstacles
-- Embassy portal invalidating session cookies mid-submission.
-- Overlapping worker requests causing Cloudflare IP rate limiting.
+### 7. What was measured
+Nothing verifiable. No logs or source were accessible.
 
-### 10. Mitigation & Engineering Fixes
-- Implemented session renewal middleware that re-hydrates cookies prior to the final POST request.
-- Distributed request intervals with randomized gaussian delay distributions (1s to 3s).
+### 8. Not measured / removed
+Solving times, success rates, "hundreds of clients" — all removed.
 
-### 11. Testing & Verification Evidence
-- Verified operational logs (`bmeia_*.log`) demonstrating successful client allocations.
-- Automated client pool unit tests testing 100 concurrent thread accesses without mutex deadlocks.
+### 9. Maturity
+`demo`.
 
-### 12. What Was Actually Built & Accomplished
-- Complete command-line booking suite (`main.py`, `booking_engine.py`, `client_loader.py`, `captcha_solver.py`).
-- Standalone Turnstile solver package (`EzSolver`).
-- Comprehensive error handling and real-time Telegram alerting.
-
-### 13. Practical & Technical Outcomes
-- Successfully booked visa appointment slots during real high-traffic embassy release windows.
-- Zero client collision or duplicate passport entry errors recorded.
-
-### 14. Remaining Work & Known Limitations
-- Embassy portal layout undergoes periodic design overhauls requiring selector map updates.
-
-### 15. Associated Technologies & Tools
-Python 3.12, `concurrent.futures`, `threading`, Requests, SeleniumBase, Telegram API, JSON schema.
+### 10. Next
+A redacted log excerpt demonstrating the dual-sink pattern would be the single most useful artefact (`MEDIA_PLAN.md` G-5).
 
 ---
 
-# Case Study 5: Supporting Systems & Tools
-*High-impact engineering tools, browser extensions, and workflow automations.*
+## Supporting projects (brief)
 
-### 5.1 WhatsApp AI Marketing & Anti-Ban Dispatcher (`whatsapp_ai`)
-- **Core Value:** Automated customer engagement engine with AI prompt routing and anti-ban behavioral modeling.
-- **Key Features:** Node.js/Express backend with JWT authentication, rate-limited dispatch queues with human-like typing delays (40ms–150ms), and SQLite/JSON database persistence.
-
-### 5.2 WebDev AI Editor (`my_ai_editor`)
-- **Core Value:** Autonomous development assistant CLI inspired by modern agentic tools.
-- **Key Features:** Token rotation across multiple model accounts, automated project file tree indexing, and code generation hooks.
-
-### 5.3 Genspark Account Manager Chrome Extension (`genspark_extintion` v2.6.1)
-- **Core Value:** Browser productivity tool built with Chrome Extension Manifest V3.
-- **Key Features:** Fast multi-account switching, background service worker session management, chrome storage sync, and full Arabic UI localization.
+| Project | Status | Evidence | Note |
+|---|---|---|---|
+| AI_MDULE — multi-provider RAG gateway | `prototype` | reported | Precursor to general_ai_core; browser-bridge/Cloudflare framing removed. |
+| WhatsApp AI campaign dispatcher | `demo` | reported | "Anti-ban" wording removed; described as rate-aware scheduling. |
+| WebDev AI Editor CLI | `prototype` | reported | — |
+| Real-time expense/asset ERP (Flask + SocketIO) | `demo` | reported | — |
+| Account session manager — Chrome MV3 extension | `demo` | reported | Personal tool; previously labelled "official / Production Ready". |
 
 ---
-**Gate 3 Case Studies Complete.**
+
+## How this document relates to the site
+
+`scripts/data.js` → card content, metrics, badges, media. `scripts/app.js` → `DETAILED_CASE_STUDIES` (modal text, source excerpts, evidence links). This file is the long-form companion and must be updated together with them. Statements must keep their **[verified]/[reported]** tags; upgrading a tag requires naming the public artefact that supports it.

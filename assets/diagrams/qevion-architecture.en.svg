@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="t d" lang="en">
+<title id="t">QEVION voice runtime — architecture</title><desc id="d">Browser audio streams over WebSocket to a FastAPI runtime whose generic Core imports contracts only; providers are swappable through role ports; business truth is decided by deterministic rules, never by the LLM.</desc>
+<defs><marker id="m22d3ee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="m22d3ees" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#22d3ee"/></marker><marker id="m34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker><marker id="m34d399s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#34d399"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mfbbf24s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fbbf24"/></marker><marker id="ma78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="ma78bfas" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#a78bfa"/></marker><marker id="mfb7185" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fb7185"/></marker><marker id="mfb7185s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fb7185"/></marker><marker id="m9fb0c7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9fb0c7"/></marker><marker id="m9fb0c7s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#9fb0c7"/></marker><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c1222"/><stop offset="1" stop-color="#090d18"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text x="600" y="40" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#f1f5f9" text-anchor="middle">QEVION voice runtime — architecture</text>
+<rect x="60" y="80" width="300" height="120" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="60" y="80" width="300" height="4" rx="2" fill="#22d3ee"/>
+<text x="210.0" y="108" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9" text-anchor="middle">Browser client</text>
+<text x="210.0" y="130" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">AudioWorklet · PCM16 @ 24 kHz</text>
+<text x="210.0" y="148" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">Operator Console (Vite + TS)</text>
+<text x="210.0" y="166" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">playout + stop_playout</text>
+<rect x="450" y="80" width="690" height="120" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="80" width="690" height="4" rx="2" fill="#22d3ee"/>
+<text x="795.0" y="108" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9" text-anchor="middle">QEVION runtime (FastAPI / Uvicorn)</text>
+<text x="795.0" y="130" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">bounded inbound queue · heartbeat ping/pong</text>
+<text x="795.0" y="148" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">REST: sessions · activities · compositions</text>
+<line x1="362" y1="140" x2="448" y2="140" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)" marker-start="url(#m22d3ees)"/>
+<text x="405" y="72" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">WebSocket: binary audio + JSON events</text>
+<rect x="450" y="240" width="690" height="150" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="240" width="690" height="4" rx="2" fill="#34d399"/>
+<text x="795.0" y="268" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#f1f5f9" text-anchor="middle">Generic Core</text>
+<text x="795.0" y="290" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">dialog + activity state machines</text>
+<text x="795.0" y="308" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">7-step interruption (t0…t4)</text>
+<text x="795.0" y="326" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">ClaimGovernor · tool pipeline</text>
+<text x="795" y="374" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="500" fill="#34d399" text-anchor="middle">imports contracts only — enforced by import-linter</text>
+<line x1="795" y1="202" x2="795" y2="238" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)"/>
+<text x="795" y="430" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#9fb0c7" text-anchor="middle">Provider role ports (swappable adapters)</text>
+<rect x="450" y="445" width="165" height="95" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="445" width="165" height="4" rx="2" fill="#22d3ee"/>
+<text x="532.5" y="473" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">turn</text>
+<text x="532.5" y="495" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">Silero VAD</text>
+<text x="532.5" y="513" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">energy</text>
+<line x1="532" y1="392" x2="532" y2="443" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)"/>
+<rect x="625" y="445" width="165" height="95" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="625" y="445" width="165" height="4" rx="2" fill="#a78bfa"/>
+<text x="707.5" y="473" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">s2s</text>
+<text x="707.5" y="495" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">OpenAI Realtime</text>
+<text x="707.5" y="513" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">mock</text>
+<line x1="707" y1="392" x2="707" y2="443" stroke="#a78bfa" stroke-width="1.8" marker-end="url(#ma78bfa)"/>
+<rect x="800" y="445" width="165" height="95" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="800" y="445" width="165" height="4" rx="2" fill="#34d399"/>
+<text x="882.5" y="473" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">decision</text>
+<text x="882.5" y="495" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">rules (ADR-0004)</text>
+<text x="882.5" y="513" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">TypeSafe (layered)</text>
+<line x1="882" y1="392" x2="882" y2="443" stroke="#34d399" stroke-width="1.8" marker-end="url(#m34d399)"/>
+<rect x="975" y="445" width="165" height="95" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="975" y="445" width="165" height="4" rx="2" fill="#fbbf24"/>
+<text x="1057.5" y="473" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">tools / sinks</text>
+<text x="1057.5" y="495" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">memory backend</text>
+<text x="1057.5" y="513" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">JSONL outcome</text>
+<line x1="1057" y1="392" x2="1057" y2="443" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#mfbbf24)"/>
+<rect x="450" y="570" width="690" height="44" rx="10" fill="#0f1b17" stroke="#34d399" stroke-width="1"/>
+<text x="795.0" y="597.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#34d399" text-anchor="middle">Business truth = deterministic rules. The LLM proposes phrasing only.</text>
+<rect x="60" y="240" width="300" height="95" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="60" y="240" width="300" height="4" rx="2" fill="#fbbf24"/>
+<text x="210.0" y="268" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Activity Blueprint (data: qevion.activity.v1)</text>
+<text x="210" y="300" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">Configuration Copilot → Blueprint (never in the call path)</text>
+<line x1="362" y1="290" x2="448" y2="290" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#mfbbf24)" stroke-dasharray="5 4"/>
+<text x="600" y="690" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">Evidence: 160 KB spec · 5 import contracts · ~220 tests · evidence/ P0–P6 · github.com/belalalibb/markting_call_center</text>
+</svg>

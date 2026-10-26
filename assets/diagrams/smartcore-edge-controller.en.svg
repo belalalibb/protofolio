@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-labelledby="t d" lang="en">
+<title id="t">SmartCore — offline-first edge controller (reported architecture)</title><desc id="d">ESP32 firmware runs local control loops and a Modbus RTU register table; sensors and actuators attach over RS-485 and GPIO; a background task mirrors state to Firebase Realtime Database when connectivity exists; a web dashboard reads the mirror. Cloud is a passive mirror, never in the control path.</desc>
+<defs><marker id="m22d3ee" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#22d3ee"/></marker><marker id="m22d3ees" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#22d3ee"/></marker><marker id="m34d399" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34d399"/></marker><marker id="m34d399s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#34d399"/></marker><marker id="mfbbf24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fbbf24"/></marker><marker id="mfbbf24s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fbbf24"/></marker><marker id="ma78bfa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a78bfa"/></marker><marker id="ma78bfas" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#a78bfa"/></marker><marker id="mfb7185" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#fb7185"/></marker><marker id="mfb7185s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#fb7185"/></marker><marker id="m9fb0c7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9fb0c7"/></marker><marker id="m9fb0c7s" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="7" markerHeight="7"><path d="M10,0 L0,5 L10,10 z" fill="#9fb0c7"/></marker><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0c1222"/><stop offset="1" stop-color="#090d18"/></linearGradient></defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text x="600" y="40" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#f1f5f9" text-anchor="middle">SmartCore — offline-first edge controller (reported architecture)</text>
+<rect x="60" y="90" width="300" height="140" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="60" y="90" width="300" height="4" rx="2" fill="#fbbf24"/>
+<text x="210.0" y="118" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">Field I/O</text>
+<text x="210.0" y="140" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">4× LDR optical array</text>
+<text x="210.0" y="158" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">soil-moisture probes</text>
+<text x="210.0" y="176" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">load cell (HX711-class)</text>
+<text x="210.0" y="194" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">stepper drivers · relays / valves</text>
+<line x1="362" y1="160" x2="448" y2="160" stroke="#fbbf24" stroke-width="1.8" marker-end="url(#mfbbf24)" marker-start="url(#mfbbf24s)"/>
+<text x="405" y="80" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">RS-485 (Modbus RTU) · GPIO / ADC</text>
+<rect x="450" y="90" width="420" height="140" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="90" width="420" height="4" rx="2" fill="#34d399"/>
+<text x="660.0" y="118" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#f1f5f9" text-anchor="middle">ESP32 · ESP-IDF v5.3 · C++17 · FreeRTOS</text>
+<text x="660.0" y="140" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">local control tasks (irrigation, solar tracking)</text>
+<text x="660.0" y="158" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">Modbus RTU register table (holding / input)</text>
+<text x="660.0" y="176" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">fixed-size buffers · never waits for cloud</text>
+<rect x="930" y="90" width="210" height="100" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="930" y="90" width="210" height="4" rx="2" fill="#9fb0c7"/>
+<text x="1035.0" y="118" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9" text-anchor="middle">PLC / SCADA master</text>
+<text x="1035.0" y="140" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">reads / writes registers</text>
+<text x="1035.0" y="158" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">over RS-485</text>
+<line x1="872" y1="140" x2="928" y2="140" stroke="#9fb0c7" stroke-width="1.8" marker-end="url(#m9fb0c7)" marker-start="url(#m9fb0c7s)"/>
+<line x1="660" y1="232" x2="660" y2="280" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)" stroke-dasharray="5 4"/>
+<rect x="450" y="282" width="420" height="90" rx="12" fill="#0e1524" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="282" width="420" height="4" rx="2" fill="#22d3ee"/>
+<text x="660.0" y="310" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#f1f5f9" text-anchor="middle">Cloud sync task (Wi-Fi)</text>
+<text x="660.0" y="332" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">state deltas only</text>
+<text x="660.0" y="350" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#9fb0c7" text-anchor="middle">when the link is healthy</text>
+<line x1="660" y1="374" x2="660" y2="420" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)" stroke-dasharray="5 4"/>
+<rect x="450" y="422" width="200" height="80" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="450" y="422" width="200" height="4" rx="2" fill="#22d3ee"/>
+<text x="550.0" y="450" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9" text-anchor="middle">Firebase Realtime DB</text>
+<text x="550.0" y="472" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">passive state mirror</text>
+<line x1="652" y1="462" x2="688" y2="462" stroke="#22d3ee" stroke-width="1.8" marker-end="url(#m22d3ee)"/>
+<rect x="690" y="422" width="180" height="80" rx="12" fill="#121a2b" stroke="#263147" stroke-width="1.2"/>
+<rect x="690" y="422" width="180" height="4" rx="2" fill="#22d3ee"/>
+<text x="780.0" y="450" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#f1f5f9" text-anchor="middle">Web dashboard</text>
+<text x="780.0" y="472" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#9fb0c7" text-anchor="middle">telemetry + switches</text>
+<rect x="60" y="540" width="1080" height="44" rx="10" fill="#0f1b17" stroke="#34d399" stroke-width="1"/>
+<text x="600.0" y="567.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#34d399" text-anchor="middle">Control decisions never wait for the cloud. Internet loss degrades monitoring, not control.</text>
+<rect x="60" y="604" width="1080" height="56" rx="10" fill="#1a1607" stroke="#fbbf24" stroke-width="1"/>
+<text x="600.0" y="637.0" font-family="Inter, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#fbbf24" text-anchor="middle">STATUS: reported from the owner&#x27;s local workspace. Firmware, register map and hardware photos are not yet public — treat as prototype until published.</text>
+</svg>

@@ -4,6 +4,8 @@
 **Audited Location:** `D:\projects`  
 **Execution Environment:** Windows / Python 3.12 / Node.js v24.14.0 / Git  
 
+> **Review notice (2026-10-26).** Workspace survey by the previous agent of a local drive (`D:\projects`) that the independent reviewer could **not** access. Directory counts, timestamps and maturity judgements here are unverified. Only `markting_call_center` (QEVION), `general_ai_core` and `chat_engen` were confirmed via their public GitHub repositories.
+
 ---
 
 ## 1. Executive Summary & Audit Scope

@@ -17,3 +17,5 @@ package-lock.json
 # Temporary / Cache
 __pycache__/
 .pytest_cache/
+_evidence/
+qa_results.json

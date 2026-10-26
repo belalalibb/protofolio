@@ -101,18 +101,18 @@
 ### 1. Navigation Bar
 - Fixed top, frosted glass blur, responsive hamburger drawer on mobile.
 - Language switcher button (`EN | عربي`) with smooth document direction flip (`dir="ltr"` / `dir="rtl"`).
-- Resume CTA button with pulsing indicator.
+- "Request CV" CTA (links to contact; relabel to "Download CV" once a PDF exists). Hidden below 768 px to keep the header on one row.
 
 ### 2. Flagship Project Card
-- High-contrast visual header with live status pill (`Tested`, `Production-Ready`, `Functional Demo`).
-- Domain tag chips (e.g. `Real-Time Voice`, `Industrial IoT`, `Anti-Bot`).
-- Quick metrics row (e.g. `Sub-800ms Latency`, `Zero External APIs`, `C++17 / Modbus`).
-- Action bar: `View Case Study` (opens full modal/drawer), `Architecture`, `Code Highlight`.
+- Header row: domain pill + **two badges** — maturity (`.status-badge.status-{concept|prototype|demo|tested|field-tested|deployed|production}`, colour-coded amber/emerald/cyan) and evidence (`.evidence-badge.evidence-{public|reported}`).
+- Metrics row as a `<dl>` with value, label and optional condition note (e.g. `≈3–4 ms · sandbox, n=20`). Values are `dir="ltr"`.
+- Highlights list, tech tags (`<ul>`), action bar: `Read case study` (modal) + `View repository` (when public).
+- **Media column** (`.project-card.has-media` → 2-column grid ≥ 900 px, stacked below): `renderGallery()` output, up to 3 items on the card; full set in the modal.
 
 ### 3. Case Study Deep Modal
-- Complete 18-point rubric presentation.
-- Side/top tab navigation: `Overview`, `Architecture`, `Decisions`, `Evidence`, `Limitations`.
-- Syntax-highlighted code blocks with copy-to-clipboard button.
+- Sections rendered from `DETAILED_CASE_STUDIES` (problem → architecture → decisions → measurements → evidence), media gallery, "From the source" code excerpt with file label, and an **Evidence** link list.
+- Accessibility: focus moves to the close button on open, Tab/Shift+Tab trapped, Escape and backdrop click close, focus restored to the trigger, `inert` on header/main/footer, `body.modal-open` scroll lock. Sticky header; bottom-sheet layout below 768 px. No transition may touch `visibility` inside the dialog (it blocks `focus()`).
+- Code blocks are plain `<pre dir="ltr" tabindex="0">`; no syntax-highlight library (none is loaded).
 - Clean ESC key / backdrop click dismissal with focus lock.
 
 ### 4. Interactive Architecture Diagram
@@ -136,3 +136,29 @@
 
 ---
 **Gate 4 Design System Specification Complete.**
+
+
+---
+
+## Media component (added 2026-10-26)
+
+```html
+<figure class="media-figure media-image|media-diagram">
+  <div class="media-frame" style="aspect-ratio: W/H">
+    <img src alt width height loading="lazy" decoding="async" [data-diagram-base]>
+  </div>
+  <figcaption>…</figcaption>
+</figure>
+```
+
+`.media-gallery.media-count-N` lays items out 1/2-up (first item spans full width when N = 3). Diagrams use `object-fit: contain`, screenshots `object-fit: cover; object-position: top`. Captions use `--text-muted` at 0.78 rem. Tokens: `--text-muted` raised to `#8290a8` for AA contrast on the dark surfaces.
+
+## Status & evidence tokens
+
+| Class | Colour | Meaning |
+|---|---|---|
+| `.status-tested`, `.status-field-tested` | emerald | automated tests / field evidence exist |
+| `.status-deployed`, `.status-production` | cyan | live traffic (none currently) |
+| `.status-demo`, `.status-prototype` | amber | works, limited verification |
+| `.evidence-public` | light blue | verified in a public repo |
+| `.evidence-reported` | violet | owner's account, source private |
